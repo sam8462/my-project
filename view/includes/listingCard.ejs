@@ -1,0 +1,23 @@
+<article class="listing-card">
+  <a href="/listings/<%= listing._id %>" class="listing-link">
+    <div class="listing-image-wrap">
+      <img src="<%= listing.cardImage?.url %>" alt="<%= listing.title %>" class="listing-image">
+      <span class="guest-favorite-chip">Guest favorite</span>
+    </div>
+
+    <div class="listing-meta">
+      <div class="title-rating-row">
+        <h3><%= listing.title %></h3>
+        <span class="rating-badge"><i class="fa-solid fa-star"></i> <%= Number(listing.rating || 4.8).toFixed(1) %></span>
+      </div>
+      <p class="listing-location"><%= listing.location %>, <%= listing.country %></p>
+      <p class="listing-price">₹<%= Number(listing.price || 0).toLocaleString("en-IN") %> <span>/ night</span></p>
+    </div>
+  </a>
+
+  <form action="/favorites/<%= listing._id %>" method="POST" class="favorite-form">
+    <button type="submit" class="favorite-btn <%= listing.isFavorite ? 'active' : '' %>" aria-label="Toggle favorite">
+      <i class="<%= listing.isFavorite ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+    </button>
+  </form>
+</article>

@@ -1,0 +1,64 @@
+<% layout('./layouts/boilerplate') %>
+
+<section class="container py-4">
+  <div class="row justify-content-center">
+    <form action="/listings/create" method="post" class="needs-validation col-lg-8" novalidate enctype="multipart/form-data">
+      <h2 class="mb-3">Create a new listing</h2>
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" name="listing[title]" id="title" placeholder="Title" required>
+        <div class="invalid-feedback">Title should be concise.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="listing[description]" id="description" class="form-control" placeholder="Description" required></textarea>
+        <div class="invalid-feedback">Description should be concise and clean.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" name="listing[image]" id="image" class="form-control">
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="price" class="form-label">Price (per night)</label>
+          <input type="number" name="listing[price]" id="price" class="form-control" required>
+          <div class="invalid-feedback">Price should be valid.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="rating" class="form-label">Rating</label>
+          <input type="number" step="0.1" min="0" max="5" name="listing[rating]" id="rating" class="form-control" value="4.8">
+        </div>
+      </div>
+
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" name="listing[location]" id="location" required placeholder="Enter location" class="form-control">
+          <div class="invalid-feedback">Location should be correct.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="country" class="form-label">Country</label>
+          <input type="text" name="listing[country]" id="country" required class="form-control">
+          <div class="invalid-feedback">Country should be valid.</div>
+        </div>
+      </div>
+
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <label for="guests" class="form-label">Guest Capacity</label>
+          <input type="number" min="1" name="listing[guests]" id="guests" value="1" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label for="availableDates" class="form-label">Available Dates (comma separated, YYYY-MM-DD)</label>
+          <input type="text" name="listing[availableDates]" id="availableDates" class="form-control" placeholder="2026-04-10, 2026-04-11">
+        </div>
+      </div>
+
+      <button class="btn btn-primary mt-4">Add Listing</button>
+    </form>
+  </div>
+</section>

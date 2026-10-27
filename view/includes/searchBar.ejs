@@ -1,0 +1,30 @@
+<section class="search-shell">
+  <form action="/listings/search" method="GET" class="search-pill">
+    <div class="search-group">
+      <label for="location">Where</label>
+      <input type="text" id="location" name="location" placeholder="Search destinations" list="locationOptions" value="<%= searchQuery?.location || '' %>">
+      <datalist id="locationOptions">
+        <% (locationSuggestions || []).forEach((item) => { %>
+          <option value="<%= item %>"></option>
+        <% }) %>
+      </datalist>
+    </div>
+
+    <div class="search-group">
+      <label for="checkIn">When</label>
+      <div class="date-fields">
+        <input type="date" id="checkIn" name="checkIn" value="<%= searchQuery?.checkIn || '' %>">
+        <input type="date" id="checkOut" name="checkOut" value="<%= searchQuery?.checkOut || '' %>">
+      </div>
+    </div>
+
+    <div class="search-group">
+      <label for="guests">Who</label>
+      <input type="number" id="guests" min="1" name="guests" placeholder="Add guests" value="<%= searchQuery?.guests || '' %>">
+    </div>
+
+    <button class="search-btn" type="submit" aria-label="Search listings">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </form>
+</section>

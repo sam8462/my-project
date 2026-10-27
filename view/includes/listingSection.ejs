@@ -1,0 +1,18 @@
+<section class="listing-section">
+  <div class="section-head">
+    <h2><%= title %></h2>
+    <% if (typeof actionHref !== "undefined" && actionHref) { %>
+      <a href="<%= actionHref %>" class="section-link"><i class="fa-solid fa-arrow-right"></i></a>
+    <% } %>
+  </div>
+
+  <% if (listings && listings.length) { %>
+    <div class="listing-grid">
+      <% listings.forEach((listing) => { %>
+        <%- include("./listingCard.ejs", { listing }) %>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <p class="empty-state">No listings found for this section yet.</p>
+  <% } %>
+</section>

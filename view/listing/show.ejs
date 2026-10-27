@@ -1,0 +1,77 @@
+<% layout("./layouts/boilerplate") %>
+
+<section class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <article class="detail-card">
+        <img src="<%= currListing.cardImage.url %>" class="detail-image" alt="listing_image">
+        <div class="p-3 p-md-4">
+          <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+            <div>
+              <h2 class="mb-1"><%= currListing.title %></h2>
+              <p class="mb-0 text-muted"><%= currListing.location %>, <%= currListing.country %></p>
+            </div>
+            <form action="/favorites/<%= currListing._id %>" method="POST">
+              <button type="submit" class="favorite-btn <%= currListing.isFavorite ? 'active' : '' %>" aria-label="Toggle favorite">
+                <i class="<%= currListing.isFavorite ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+              </button>
+            </form>
+          </div>
+
+          <p class="mt-3 mb-2"><strong>Hosted by</strong> <%= currListing.owner.username %></p>
+          <p class="mb-2">₹<%= Number(currListing.price || 0).toLocaleString("en-IN") %> / night</p>
+          <p class="mb-2"><i class="fa-solid fa-star"></i> <%= Number(currListing.rating || 4.8).toFixed(1) %> rating</p>
+          <p class="mb-2"><%= currListing.guests || 1 %> guests max</p>
+          <p class="mb-0"><%= currListing.description %></p>
+
+          <% if (currUser && currUser._id.equals(currListing.owner._id)) { %>
+            <div class="edit-delete-btn mt-4">
+              <a href="/listings/edit/<%= currListing._id %>" class="btn btn-outline-dark">Edit</a>
+              <form method="post" action="/listings/delete/<%= currListing._id %>?_method=DELETE">
+                <button class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+          <% } %>
+        </div>
+      </article>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="detail-card p-3 p-md-4">
+        <h5 class="mb-3">Leave a review</h5>
+        <form action="/listings/<%= currListing.id %>/review" method="POST" novalidate class="needs-validation">
+          <div class="mb-3">
+            <label for="rating" class="form-label">Rating</label>
+            <input type="range" min="1" max="5" name="review[rating]" class="form-range" id="rating" required>
+          </div>
+          <div class="mb-3">
+            <label for="comment" class="form-label">Comment</label>
+            <textarea name="review[comment]" id="comment" rows="4" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please add some comments for reviews.</div>
+          </div>
+          <button class="btn btn-primary w-100">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h4 class="mb-3">All Reviews</h4>
+    <div class="row g-3">
+      <% for (review of currListing.reviews) { %>
+        <div class="col-md-6">
+          <div class="detail-card p-3">
+            <h6 class="mb-1">@<%= review.author.username %></h6>
+            <p class="mb-1"><%= review.comment %></p>
+            <p class="mb-2 text-muted"><%= review.rating %> star</p>
+            <% if (currUser && currUser._id.equals(review.author._id)) { %>
+              <form method="POST" action="/listings/<%= currListing._id %>/review/<%= review._id %>?_method=DELETE">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>

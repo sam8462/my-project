@@ -1,0 +1,67 @@
+<% layout('./layouts/boilerplate') %>
+
+<section class="container py-4">
+  <div class="row justify-content-center">
+    <form action="/listings/update/<%= editableListing._id %>?_method=PUT" method="post" class="needs-validation col-lg-8" novalidate enctype="multipart/form-data">
+      <h2 class="mb-3">Edit your listing</h2>
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" name="listing[title]" required id="title" value="<%= editableListing.title %>">
+        <div class="invalid-feedback">Title should be concise.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="listing[description]" id="description" class="form-control" required><%= editableListing.description %></textarea>
+        <div class="invalid-feedback">Description should be concise and clean.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Upload new image</label>
+        <input type="file" name="listing[image]" id="image" class="form-control">
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="price" class="form-label">Price</label>
+          <input type="number" required name="listing[price]" id="price" value="<%= editableListing.price %>" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label for="rating" class="form-label">Rating</label>
+          <input type="number" step="0.1" min="0" max="5" name="listing[rating]" id="rating" value="<%= editableListing.rating || 4.8 %>" class="form-control">
+        </div>
+      </div>
+
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" required name="listing[location]" id="location" value="<%= editableListing.location %>" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label for="country" class="form-label">Country</label>
+          <input type="text" required name="listing[country]" id="country" value="<%= editableListing.country %>" class="form-control">
+        </div>
+      </div>
+
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <label for="guests" class="form-label">Guest Capacity</label>
+          <input type="number" min="1" name="listing[guests]" id="guests" value="<%= editableListing.guests || 1 %>" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label for="availableDates" class="form-label">Available Dates (comma separated)</label>
+          <input
+            type="text"
+            name="listing[availableDates]"
+            id="availableDates"
+            class="form-control"
+            value="<%= (editableListing.availableDates || []).map((date) => new Date(date).toISOString().slice(0,10)).join(', ') %>"
+          >
+        </div>
+      </div>
+
+      <button class="btn btn-primary mt-4">Update Listing</button>
+    </form>
+  </div>
+</section>

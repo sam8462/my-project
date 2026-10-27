@@ -1,0 +1,32 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<main class="home-page">
+  <%- include("../includes/searchBar.ejs", { searchQuery, locationSuggestions }) %>
+
+  <div class="container py-4 py-lg-5">
+    <% if (pageTitle) { %>
+      <div class="result-header">
+        <h1><%= pageTitle %></h1>
+        <% if (typeof totalResults !== "undefined") { %>
+          <p class="text-muted mb-0"><%= totalResults %> listing(s) found</p>
+        <% } %>
+      </div>
+    <% } %>
+
+    <% if (isSearchPage) { %>
+      <%- include("../includes/listingSection.ejs", { title: "Matching Homes", listings: allListings, actionHref: "" }) %>
+      <% if (!allListings || allListings.length === 0) { %>
+        <div class="detail-card p-4 mt-3">
+          <h5 class="mb-2">No exact matches found</h5>
+          <p class="text-muted mb-0">Try a different location, wider dates, or fewer guests.</p>
+        </div>
+      <% } %>
+    <% } else { %>
+      <%- include("../includes/listingSection.ejs", { title: "Popular Homes", listings: popularListings, actionHref: "/listings/popular" }) %>
+
+      <%- include("../includes/listingSection.ejs", { title: `Available This Weekend (${weekendLabel})`, listings: weekendListings, actionHref: "/listings/weekend" }) %>
+
+      <%- include("../includes/listingSection.ejs", { title: "Explore More Homes", listings: allListings, actionHref: "/listings" }) %>
+    <% } %>
+  </div>
+</main>
